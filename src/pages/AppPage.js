@@ -491,11 +491,11 @@ function StudentModal({schools,initial,onSave,onClose}) {
         </div>
         <div style={{gridColumn:'1/-1'}}>
           <label style={st.label}>📦 Portare alla prossima lezione</label>
-          <input style={st.input} value={f.next_to_bring||''} onChange={e=>setF({...f,next_to_bring:e.target.value})} placeholder='Metodo Beyer pagina 12…'/>
+          <input style={st.input} value={f.next_to_bring||''} onChange={e=>setF({...f,next_to_bring:e.target.value})} placeholder='Metodo Beyer pagina 12...'/>
         </div>
         <div style={{gridColumn:'1/-1'}}>
           <label style={st.label}>Note generali</label>
-          <textarea style={{...st.input,minHeight:70,resize:'vertical'}} value={f.notes||''} onChange={e=>setF({...f,notes:e.target.value})} placeholder='Note sull'alunno…'/>
+          <textarea style={{...st.input,minHeight:70,resize:'vertical'}} value={f.notes||''} onChange={e=>setF({...f,notes:e.target.value})} placeholder={"Note sull'alunno..."}/>
         </div>
       </div>
     </Modal>
@@ -551,7 +551,7 @@ function Modal({title,onClose,onSave,children}) {
   )
 }
 
-function useState(init) { return require('react').useState(init) }
+
 const Card=({title,accent='#E8A838',span,children})=><div style={{...st.card,...(span===2?{gridColumn:'1/-1'}:{})}}><div style={{fontWeight:700,fontSize:13,color:accent,marginBottom:12,textTransform:'uppercase',letterSpacing:1}}>{title}</div>{children}</div>
 const LessonRow=({lesson,student,schoolById,SchoolBadge,done,onClick})=>{if(!student)return null;const sc=schoolById?.(student.school_id);return(<div style={{...st.lessonRow,...(onClick?{cursor:'pointer'}:{}),...(done?{opacity:.75}:{})}} onClick={onClick}><div><span style={{fontWeight:600,color:'#f0f0f0'}}>{student.name}</span><span style={{color:'#E8A838',fontSize:13,marginLeft:8}}>♪ {student.instrument}</span></div><div style={{display:'flex',gap:8,alignItems:'center'}}><span style={{fontSize:13,color:'#aaa'}}>{fmtTime(lesson.datetime)}</span>{sc&&<SchoolBadge id={student.school_id} small/>}</div></div>)}
 const SectionTitle=({children})=><div style={{fontWeight:700,fontSize:13,color:'#E8A838',textTransform:'uppercase',letterSpacing:1,marginBottom:10,marginTop:4}}>{children}</div>
