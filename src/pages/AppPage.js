@@ -202,7 +202,7 @@ function Students({students,schools,schoolById,lessonsOf,SchoolBadge,setSelected
   return (
     <div>
       <div style={{display:'flex',gap:12,marginBottom:20,flexWrap:'wrap'}}>
-        <input style={st.input} placeholder='🔍  Cerca alunno o strumento…' value={search} onChange={e=>setSearch(e.target.value)}/>
+        <input style={st.input} placeholder='🔍  Cerca alunno o strumento...' value={search} onChange={e=>setSearch(e.target.value)}/>
         <select style={st.select} value={filterSchool} onChange={e=>setFilterSchool(e.target.value)}>
           <option value=''>Tutte le scuole</option>
           {schools.map(sc=><option key={sc.id} value={sc.id}>{sc.name}</option>)}
@@ -326,15 +326,15 @@ function LessonCard({lesson,student,school,expandId,setExpandId,updateLesson,rem
         <div style={{marginTop:14,borderTop:'1px solid #333',paddingTop:14,display:'flex',flexDirection:'column',gap:10}}>
           <div>
             <label style={st.label}>Argomento</label>
-            <input style={st.input} value={topic} onChange={e=>{setTopic(e.target.value);setDirty(d=>({...d,topic:1}))}} placeholder='Scale, solfeggio…'/>
+            <input style={st.input} value={topic} onChange={e=>{setTopic(e.target.value);setDirty(d=>({...d,topic:1}))}} placeholder='Scale, solfeggio...'/>
           </div>
           <div>
             <label style={st.label}>Annotazioni</label>
-            <textarea style={{...st.input,minHeight:80,resize:'vertical'}} value={notes} onChange={e=>{setNotes(e.target.value);setDirty(d=>({...d,notes:1}))}} placeholder='Note sulla lezione…'/>
+            <textarea style={{...st.input,minHeight:80,resize:'vertical'}} value={notes} onChange={e=>{setNotes(e.target.value);setDirty(d=>({...d,notes:1}))}} placeholder='Note sulla lezione...'/>
           </div>
           <div>
             <label style={st.label}>📦 Portare la prossima volta</label>
-            <input style={st.input} value={bring} onChange={e=>{setBring(e.target.value);setDirty(d=>({...d,bring:1}))}} placeholder='Metodo Beyer, quaderno…'/>
+            <input style={st.input} value={bring} onChange={e=>{setBring(e.target.value);setDirty(d=>({...d,bring:1}))}} placeholder='Metodo Beyer, quaderno...'/>
           </div>
           <div style={{display:'flex',gap:8,flexWrap:'wrap',alignItems:'center'}}>
             {Object.keys(dirty).length>0 && <PrimaryBtn onClick={save}>💾 Salva</PrimaryBtn>}
@@ -397,7 +397,7 @@ function LessonsView({lessons,students,schools,studentById,schoolById,SchoolBadg
                 </div>
                 <div style={{fontSize:13,color:'#aaa',marginTop:4}}>{fmt(l.datetime)} · {fmtTime(l.datetime)} · {l.duration||s?.duration} min</div>
                 {l.topic && <div style={{fontSize:13,color:'#bbb',marginTop:2}}>📚 {l.topic}</div>}
-                {l.notes && <div style={{fontSize:12,color:'#999',marginTop:4,fontStyle:'italic'}}>✍ {l.notes.slice(0,100)}{l.notes.length>100?'…':''}</div>}
+                {l.notes && <div style={{fontSize:12,color:'#999',marginTop:4,fontStyle:'italic'}}>✍ {l.notes.slice(0,100)}{l.notes.length>100?'...':''}</div>}
                 {l.next_to_bring && <div style={{fontSize:12,color:'#9B6DD9',marginTop:4}}>📦 {l.next_to_bring}</div>}
               </div>
               <div style={{display:'flex',gap:6,alignItems:'flex-start'}}>
@@ -491,11 +491,11 @@ function StudentModal({schools,initial,onSave,onClose}) {
         </div>
         <div style={{gridColumn:'1/-1'}}>
           <label style={st.label}>📦 Portare alla prossima lezione</label>
-          <input style={st.input} value={f.next_to_bring||''} onChange={e=>setF({...f,next_to_bring:e.target.value})} placeholder='Metodo Beyer pagina 12…'/>
+          <input style={st.input} value={f.next_to_bring||''} onChange={e=>setF({...f,next_to_bring:e.target.value})} placeholder='Metodo Beyer pagina 12...'/>
         </div>
         <div style={{gridColumn:'1/-1'}}>
           <label style={st.label}>Note generali</label>
-          <textarea style={{...st.input,minHeight:70,resize:'vertical'}} value={f.notes||''} onChange={e=>setF({...f,notes:e.target.value})} placeholder='Note sull'alunno…'/>
+          <textarea style={{...st.input,minHeight:70,resize:'vertical'}} value={f.notes||''} onChange={e=>setF({...f,notes:e.target.value})} placeholder="Note sull'alunno..."/>
         </div>
       </div>
     </Modal>
@@ -523,11 +523,11 @@ function LessonModal({students,initial,onSave,onClose}) {
         </div>
       </div>
       <label style={st.label}>Argomento</label>
-      <input style={st.input} value={f.topic} onChange={e=>setF({...f,topic:e.target.value})} placeholder='Scale maggiori, lettura…'/>
+      <input style={st.input} value={f.topic} onChange={e=>setF({...f,topic:e.target.value})} placeholder='Scale maggiori, lettura...'/>
       <label style={st.label}>Annotazioni</label>
-      <textarea style={{...st.input,minHeight:80,resize:'vertical'}} value={f.notes} onChange={e=>setF({...f,notes:e.target.value})} placeholder='Note sulla lezione…'/>
+      <textarea style={{...st.input,minHeight:80,resize:'vertical'}} value={f.notes} onChange={e=>setF({...f,notes:e.target.value})} placeholder='Note sulla lezione...'/>
       <label style={st.label}>📦 Portare la prossima volta</label>
-      <input style={st.input} value={f.next_to_bring} onChange={e=>setF({...f,next_to_bring:e.target.value})} placeholder='Quaderno, metodo pagina 24…'/>
+      <input style={st.input} value={f.next_to_bring} onChange={e=>setF({...f,next_to_bring:e.target.value})} placeholder='Quaderno, metodo pagina 24...'/>
     </Modal>
   )
 }
@@ -551,7 +551,6 @@ function Modal({title,onClose,onSave,children}) {
   )
 }
 
-function useState(init) { return require('react').useState(init) }
 const Card=({title,accent='#E8A838',span,children})=><div style={{...st.card,...(span===2?{gridColumn:'1/-1'}:{})}}><div style={{fontWeight:700,fontSize:13,color:accent,marginBottom:12,textTransform:'uppercase',letterSpacing:1}}>{title}</div>{children}</div>
 const LessonRow=({lesson,student,schoolById,SchoolBadge,done,onClick})=>{if(!student)return null;const sc=schoolById?.(student.school_id);return(<div style={{...st.lessonRow,...(onClick?{cursor:'pointer'}:{}),...(done?{opacity:.75}:{})}} onClick={onClick}><div><span style={{fontWeight:600,color:'#f0f0f0'}}>{student.name}</span><span style={{color:'#E8A838',fontSize:13,marginLeft:8}}>♪ {student.instrument}</span></div><div style={{display:'flex',gap:8,alignItems:'center'}}><span style={{fontSize:13,color:'#aaa'}}>{fmtTime(lesson.datetime)}</span>{sc&&<SchoolBadge id={student.school_id} small/>}</div></div>)}
 const SectionTitle=({children})=><div style={{fontWeight:700,fontSize:13,color:'#E8A838',textTransform:'uppercase',letterSpacing:1,marginBottom:10,marginTop:4}}>{children}</div>

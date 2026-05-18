@@ -78,7 +78,7 @@ export default function AuthPage() {
           {info  && <div style={s.info}>{info}</div>}
 
           <button style={s.submitBtn} type="submit" disabled={loading}>
-            {loading ? '…' : mode === 'login' ? 'Accedi' : mode === 'register' ? 'Crea account' : 'Invia email di reset'}
+            {loading ? '...' : mode === 'login' ? 'Accedi' : mode === 'register' ? 'Crea account' : 'Invia email di reset'}
           </button>
 
           {mode === 'login' && (
