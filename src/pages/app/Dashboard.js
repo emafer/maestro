@@ -19,7 +19,7 @@ export default function Dashboard({upcoming, past, students, schools, lessons, s
       <Card title='Prossime lezioni' accent='#5B8DD9'>
         {upcoming.length===0 ? <Empty>Nessuna lezione programmata</Empty>
           : upcoming.map(l => (
-            <LessonRow key={l.id} lesson={l} student={studentById(l.student_id)} schoolById={schoolById} SchoolBadge={SchoolBadge} onClick={() => {setSelectedStudent(l.student_id); setView('students')}}/>
+            <LessonRow key={l.id} lesson={l} student={studentById(l.student_id)} schoolById={schoolById} SchoolBadge={SchoolBadge} showDate onClick={() => {setSelectedStudent(l.student_id); setView('students')}}/>
           ))}
         <button className="link-btn" onClick={() => setView('lessons')}>Vedi tutte →</button>
       </Card>

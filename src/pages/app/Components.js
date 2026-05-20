@@ -44,7 +44,7 @@ export const Card = ({title, accent='#E8A838', span, children}) => (
   </div>
 )
 
-export const LessonRow = ({lesson, student, schoolById, SchoolBadge, done, onClick}) => {
+export const LessonRow = ({lesson, student, schoolById, SchoolBadge, done, onClick, showDate}) => {
   if(!student) return null
   const sc = schoolById?.(student.school_id)
   return (
@@ -54,7 +54,10 @@ export const LessonRow = ({lesson, student, schoolById, SchoolBadge, done, onCli
         <span style={{color:'var(--primary)',fontSize:15,marginLeft:8}}>♪ {student.instrument}</span>
       </div>
       <div style={{display:'flex',gap:8,alignItems:'center'}}>
-        <span style={{fontSize:15,color:'var(--text-muted)'}}>{fmtTime(lesson.datetime)}</span>
+        <span style={{fontSize:14,color:'var(--text-muted)'}}>
+          {showDate && <span style={{marginRight:6}}>{fmt(lesson.datetime)}</span>}
+          {fmtTime(lesson.datetime)}
+        </span>
         {sc && <SchoolBadge id={student.school_id} small/>}
       </div>
     </div>
