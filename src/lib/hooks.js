@@ -48,7 +48,7 @@ export function useStudents() {
     if (!user) return
     const { data } = await supabase
       .from('students').select('*')
-      .eq('user_id', user.id).order('name')
+      .eq('user_id', user.id).order('last_name').order('first_name')
     setStudents(data || [])
     setLoading(false)
   }, [user])
@@ -58,7 +58,7 @@ export function useStudents() {
   const add = async (s) => {
     const { data, error } = await supabase.from('students')
       .insert({ ...s, user_id: user.id }).select().single()
-    if (!error) setStudents(prev => [...prev, data].sort((a,b) => a.name.localeCompare(b.name)))
+    if (!error) setStudents(prev => [...prev, data].sort((a,b) => a.last_name.localeCompare(b.last_name) || a.first_name.localeCompare(b.first_name)))
     return { data, error }
   }
 
@@ -116,4 +116,40 @@ export function useLessons() {
   }
 
   return { lessons, loading, add, update, remove, refresh: fetch }
+}
+
+// ── PROFILE / SETTINGS ──────────────────────────────────────────────
+export function useProfile() {
+  const { user } = useAuth()
+  const [profile, setProfile] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const fetch = useCallback(async () => {
+    if (!user) return
+    const { data, error } = await supabase
+      .from('profiles').select('*')
+      .eq('id', user.id).single()
+    
+    // Se il profilo non esiste (per vecchi utenti senza trigger), lo creiamo
+    if (error && error.code === 'PGRST116') {
+      const { data: newData } = await supabase.from('profiles')
+        .insert({ id: user.id }).select().single()
+      setProfile(newData)
+    } else {
+      setProfile(data)
+    }
+    setLoading(false)
+  }, [user])
+
+  useEffect(() => { fetch() }, [fetch])
+
+  const update = async (patch) => {
+    const { data, error } = await supabase.from('profiles')
+      .update({ ...patch, updated_at: new Date().toISOString() })
+      .eq('id', user.id).select().single()
+    if (!error) setProfile(data)
+    return { data, error }
+  }
+
+  return { profile, loading, update, refresh: fetch }
 }

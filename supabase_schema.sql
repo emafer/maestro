@@ -23,13 +23,16 @@ create table public.students (
   id            uuid primary key default gen_random_uuid(),
   user_id       uuid not null references auth.users(id) on delete cascade,
   school_id     uuid references public.schools(id) on delete set null,
-  name          text not null,
+  first_name    text not null,
+  last_name     text not null,
   instrument    text not null,
   duration      int  not null default 30,
   email         text,
-  phone         text,
+  father_name   text,
+  father_phone  text,
+  mother_name   text,
+  mother_phone  text,
   notes         text,
-  next_to_bring text,
   created_at    timestamptz default now()
 );
 alter table public.students enable row level security;
@@ -61,3 +64,28 @@ create index on public.students(user_id);
 create index on public.lessons(user_id);
 create index on public.lessons(student_id);
 create index on public.lessons(datetime);
+
+-- 4. PROFILI / IMPOSTAZIONI
+create table public.profiles (
+  id                  uuid primary key references auth.users(id) on delete cascade,
+  default_instrument  text,
+  wa_template         text default 'Ciao {{GENITORE}}, ti ricordo la prossima lezione di {{STRUMENTO}} per {{ALUNNO}} il giorno {{DATA}} alle ore {{ORA}}. A presto!',
+  updated_at          timestamptz default now()
+);
+alter table public.profiles enable row level security;
+create policy "Owner only" on public.profiles
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
+
+-- Trigger per creare il profilo automaticamente al signup
+create function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id)
+  values (new.id);
+  return new;
+end;
+$$ language plpgsql security definer;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
